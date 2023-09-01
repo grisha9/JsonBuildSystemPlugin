@@ -27,12 +27,14 @@ import com.intellij.ui.layout.ValidationInfoBuilder
 import icons.OpenapiIcons
 import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonBuildModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.SystemSettings
+import ru.rzn.gmyasoedov.jsonbuildsystem.utils.BuildModelWithPath
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.JsonBuildSystemUtils
 import java.io.File
+import java.nio.file.Path
 import javax.swing.Icon
 
 abstract class JsonNewProjectWizardStep<ParentStep>(parent: ParentStep) :
-    MavenizedNewProjectWizardStep<JsonBuildModel, ParentStep>(parent)
+    MavenizedNewProjectWizardStep<BuildModelWithPath, ParentStep>(parent)
         where ParentStep : NewProjectWizardStep,
               ParentStep : NewProjectWizardBaseData {
 
@@ -48,14 +50,15 @@ abstract class JsonNewProjectWizardStep<ParentStep>(parent: ParentStep) :
         }.bottomGap(BottomGap.SMALL)
     }
 
-    override fun createView(data: JsonBuildModel) = MavenDataView(data)
+    override fun createView(data: BuildModelWithPath) = MavenDataView(data)
 
-    override fun findAllParents(): List<JsonBuildModel> {
+    override fun findAllParents(): List<BuildModelWithPath> {
         val project = context.project ?: return emptyList()
         val projectDirectory = context.projectFileDirectory
         val configPath = project.getService(SystemSettings::class.java)
             .getLinkedProjectSettings(projectDirectory)?.configPath ?: return emptyList()
-        return JsonBuildSystemUtils.getAllModules(configPath)
+        return JsonBuildSystemUtils.getAllModulesWithPath(configPath)
+            .sortedBy { it.modelPath != Path.of(parentStep.path) }
     }
 
 
@@ -68,7 +71,7 @@ abstract class JsonNewProjectWizardStep<ParentStep>(parent: ParentStep) :
     }
 
     private fun ValidationInfoBuilder.validateCoordinates(): ValidationInfo? {
-        val mavenIds = parentsData.map { it.groupId to it.artifactId }.toSet()
+        val mavenIds = parentsData.map { it.buildModel.groupId to it.buildModel.artifactId }.toSet()
         if (groupId to artifactId in mavenIds) {
             val message = ExternalSystemBundle.message(
                 "external.system.mavenized.structure.wizard.entity.coordinates.already.exists.error",
@@ -79,15 +82,11 @@ abstract class JsonNewProjectWizardStep<ParentStep>(parent: ParentStep) :
         return null
     }
 
-    class MavenDataView(override val data: JsonBuildModel) : DataView<JsonBuildModel>() {
-        override val location: String = ""
+    class MavenDataView(override val data: BuildModelWithPath) : DataView<BuildModelWithPath>() {
+        override val location: String = data.modelPath.toString()
         override val icon: Icon = AllIcons.FileTypes.Json
-        override val presentationName: String = data.artifactId
-        override val groupId: String = data.groupId
-        override val version: String = data.version
-
-        override fun toString(): String {
-            return "MavenDataView(data=$data, location='$location', presentationName='$presentationName', groupId='$groupId', version='$version')"
-        }
+        override val presentationName: String = data.buildModel.artifactId
+        override val groupId: String = data.buildModel.groupId
+        override val version: String = data.buildModel.version
     }
 }

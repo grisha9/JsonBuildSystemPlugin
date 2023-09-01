@@ -1,6 +1,5 @@
 package ru.rzn.gmyasoedov.jsonbuildsystem.project
 
-import com.google.gson.Gson
 import com.intellij.openapi.externalSystem.model.ExternalSystemException
 import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskId
 import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskNotificationListener
@@ -8,7 +7,7 @@ import com.intellij.openapi.externalSystem.task.ExternalSystemTaskManager
 import com.intellij.openapi.util.io.FileUtil
 import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonBuildModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.ExecutionSettings
-import java.io.FileReader
+import ru.rzn.gmyasoedov.jsonbuildsystem.utils.JsonBuildSystemUtils
 import java.nio.file.Path
 
 class JsonBuildSystemTaskManager : ExternalSystemTaskManager<ExecutionSettings> {
@@ -27,7 +26,7 @@ class JsonBuildSystemTaskManager : ExternalSystemTaskManager<ExecutionSettings> 
             return
         }
         val configPath = settings.configPath ?: throw ExternalSystemException("config paths is empty")
-        val buildModel = Gson().fromJson(FileReader(configPath), JsonBuildModel::class.java)
+        val buildModel = JsonBuildSystemUtils.fromJson(configPath)
         removeTargetDir(buildModel, Path.of(configPath).parent.parent)
     }
 

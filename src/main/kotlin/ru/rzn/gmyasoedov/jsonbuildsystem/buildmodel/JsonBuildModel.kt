@@ -4,13 +4,13 @@ class JsonBuildModel(
     val groupId: String,
     val artifactId: String,
     val version: String,
-    val sources: List<String>,
-    val resources: List<String>,
-    val sourcesTest: List<String>,
-    val resourcesTest: List<String>,
+    val sources: MutableList<String>,
+    val resources: MutableList<String>,
+    val sourcesTest: MutableList<String>,
+    val resourcesTest: MutableList<String>,
     val compilerJdkVersion: String,
-    val compilerArgs: List<String>,
-    val dependencies: List<JsonDependencyModel>,
+    val compilerArgs: MutableList<String>,
+    val dependencies: MutableList<JsonDependencyModel>,
     val modules: MutableList<JsonBuildModel>
 )
 
