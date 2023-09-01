@@ -1,0 +1,57 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>ru.rzn.gmyasoedov.jsonbuildsystem.JsonBuildSystemPlugin</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>JsonBuildSystemPlugin</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="grisha0909@gmail.com">gmyasoedov</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+        Test build system with json config file
+  ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.properties</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <externalSystemManager implementation="ru.rzn.gmyasoedov.jsonbuildsystem.JsonBuildSystemManager"/>
+        <projectOpenProcessor implementation="ru.rzn.gmyasoedov.jsonbuildsystem.wizard.JsonBuildSystemProjectOpenProcessor"/>
+        <newProjectWizard.java.buildSystem implementation="ru.rzn.gmyasoedov.jsonbuildsystem.wizard.JsonBuildSystemNewProjectWizard"/>
+        <projectConfigurable groupId="build.tools" groupWeight="200" id="reference.settingsdialog.project.jsonBuildSystem"
+                             instance="ru.rzn.gmyasoedov.jsonbuildsystem.settings.JsonBuildSystemSettingsConfigurable"
+                             displayName="JsonBuildSystem"/>
+        <toolWindow id="JsonBuildSystem" anchor="right" icon="AllIcons.FileTypes.Json"
+                    factoryClass="ru.rzn.gmyasoedov.jsonbuildsystem.view.JsonBuildSystemToolWindowFactory"/>
+
+        <externalProjectDataService implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.service.CompilerArgDataService"/>
+
+        <projectService serviceImplementation="ru.rzn.gmyasoedov.jsonbuildsystem.settings.SystemSettings"/>
+        <projectService serviceImplementation="ru.rzn.gmyasoedov.jsonbuildsystem.settings.LocalSettings"/>
+
+        <registryKey key="JSONBUILDSYSTEM.system.in.process" defaultValue="true"
+                     description="Whether IDEA should use 'in-process' mode for interaction with plugin api"/>
+    </extensions>
+
+    <actions>
+        <action id="JsonBuildSystem.Toolbar.SkipTests" class="ru.rzn.gmyasoedov.jsonbuildsystem.action.SkipTestsAction"/>
+
+        <group id="JsonBuildSystem.View.ActionsToolbar.CenterPanel">
+            <separator/>
+            <reference id="JsonBuildSystem.Toolbar.SkipTests"/>
+            <separator/>
+            <add-to-group group-id="ExternalSystemView.ActionsToolbar.CenterPanel" anchor="last"/>
+        </group>
+    </actions>
+</idea-plugin>
