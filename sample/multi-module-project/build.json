@@ -8,9 +8,7 @@
   "sources": [],
   "resources": [],
   "sourcesTest": [],
-  "resourcesTest": [
-    "src/test/resources"
-  ],
+  "resourcesTest": [],
   "modules": [
     {
       "groupId": "ru.rzn.build.json.system",

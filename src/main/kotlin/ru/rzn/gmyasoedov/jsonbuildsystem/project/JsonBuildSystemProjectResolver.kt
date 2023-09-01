@@ -20,6 +20,7 @@ import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonDependencyModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.project.model.BuildActionData
 import ru.rzn.gmyasoedov.jsonbuildsystem.project.model.CompilerArgData
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.ExecutionSettings
+import ru.rzn.gmyasoedov.jsonbuildsystem.utils.JsonBuildSystemUtils
 import java.io.FileReader
 import java.nio.file.Path
 
@@ -35,7 +36,7 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
     ): DataNode<ProjectData> {
         settings ?: throw ExternalSystemException("settings is empty")
         val configPath = settings.configPath ?: throw ExternalSystemException("config paths is empty")
-        val buildModel = Gson().fromJson(FileReader(configPath), JsonBuildModel::class.java)
+        val buildModel = JsonBuildSystemUtils.fromJson(configPath)
         val languageLevel = settings.jdkName?.let { LanguageLevel.parse(it) }
             ?: throw ExternalSystemException("sdk not found")
         val mainModulePath = Path.of(configPath).parent
