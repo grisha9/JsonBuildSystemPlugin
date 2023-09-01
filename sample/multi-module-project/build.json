@@ -1,0 +1,58 @@
+{
+  "groupId": "ru.rzn.build.json.system",
+  "artifactId": "multi-module-project",
+  "version": "1.0-SNAPSHOT",
+  "compilerJdkVersion": "11",
+  "compilerArgs": [],
+  "dependencies": [],
+  "sources": [],
+  "resources": [],
+  "sourcesTest": [],
+  "resourcesTest": [
+    "src/test/resources"
+  ],
+  "modules": [
+    {
+      "groupId": "ru.rzn.build.json.system",
+      "artifactId": "module1",
+      "version": "1.0-SNAPSHOT",
+      "sources": [
+        "src/main/java"
+      ],
+      "resources": [
+        "src/main/resources"
+      ],
+      "sourcesTest": [
+        "src/test/java"
+      ],
+      "resourcesTest": [
+        "src/test/resources"
+      ],
+      "compilerJdkVersion": "11",
+      "compilerArgs": [],
+      "dependencies": [],
+      "modules": []
+    },
+    {
+      "groupId": "ru.rzn.build.json.system",
+      "artifactId": "module2",
+      "version": "1.0-SNAPSHOT",
+      "sources": [
+        "src/main/java"
+      ],
+      "resources": [
+        "src/main/resources"
+      ],
+      "sourcesTest": [
+        "src/test/java"
+      ],
+      "resourcesTest": [
+        "src/test/resources"
+      ],
+      "compilerJdkVersion": "11",
+      "compilerArgs": [],
+      "dependencies": [],
+      "modules": []
+    }
+  ]
+}

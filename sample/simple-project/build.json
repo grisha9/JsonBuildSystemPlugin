@@ -1,0 +1,31 @@
+{
+  "groupId": "ru.rzn.build.json.system",
+  "artifactId": "simple-project",
+  "version": "1.0-SNAPSHOT",
+  "sources": [
+    "src/main/java"
+  ],
+  "resources": [
+    "src/main/resources"
+  ],
+  "sourcesTest": [
+    "src/test/java"
+  ],
+  "resourcesTest": [
+    "src/test/resources"
+  ],
+  "compilerJdkVersion": "11",
+  "compilerArgs": [
+    "-verbose",
+    "-Xlint:all"
+  ],
+  "dependencies": [
+    {
+      "groupId": "org.hamcrest",
+      "artifactId": "hamcrest-core",
+      "version": "4.12",
+      "relativePath": "lib/hamcrest-core-2.1.jar"
+    }
+  ],
+  "modules": []
+}

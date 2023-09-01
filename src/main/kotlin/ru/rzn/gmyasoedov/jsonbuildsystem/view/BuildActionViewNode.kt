@@ -7,7 +7,7 @@ import com.intellij.openapi.externalSystem.view.ExternalProjectsView
 import com.intellij.openapi.externalSystem.view.ExternalSystemNode
 
 @Order(ExternalSystemNode.BUILTIN_TASKS_DATA_NODE_ORDER)
-class BuildTaskNode(externalProjectsView: ExternalProjectsView) :
+class BuildActionViewNode(externalProjectsView: ExternalProjectsView) :
     ExternalSystemNode<Void>(externalProjectsView, null, null) {
 
     override fun update(presentation: PresentationData) {

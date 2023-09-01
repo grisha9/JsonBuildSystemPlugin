@@ -17,6 +17,7 @@ import com.intellij.pom.java.LanguageLevel
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants.SYSTEM_ID
 import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonBuildModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonDependencyModel
+import ru.rzn.gmyasoedov.jsonbuildsystem.project.model.BuildActionData
 import ru.rzn.gmyasoedov.jsonbuildsystem.project.model.CompilerArgData
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.ExecutionSettings
 import java.io.FileReader
@@ -40,6 +41,7 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
         val mainModulePath = Path.of(configPath).parent
 
         val projectDataNode = createProjectNode(buildModel, mainModulePath)
+        projectDataNode.createChild(BuildActionData.KEY, BuildActionData())
         setupTasks(projectDataNode, mainModulePath)
         setupJdkNodes(settings, projectDataNode, mainModulePath, languageLevel)
         setupModulesData(buildModel, mainModulePath.parent, projectDataNode)

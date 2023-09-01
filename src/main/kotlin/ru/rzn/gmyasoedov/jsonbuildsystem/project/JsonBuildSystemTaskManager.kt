@@ -10,7 +10,7 @@ import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonBuildModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.ExecutionSettings
 import java.io.FileReader
 import java.nio.file.Path
-// <action id="CompileProject" class="com.intellij.compiler.actions.CompileProjectAction"/>
+
 class JsonBuildSystemTaskManager : ExternalSystemTaskManager<ExecutionSettings> {
 
     override fun executeTasks(
@@ -22,9 +22,13 @@ class JsonBuildSystemTaskManager : ExternalSystemTaskManager<ExecutionSettings> 
         listener: ExternalSystemTaskNotificationListener
     ) {
         settings ?: throw ExternalSystemException("settings is empty")
+        if (taskNames != listOf("clean")) {
+            // sorry only clean work
+            return
+        }
         val configPath = settings.configPath ?: throw ExternalSystemException("config paths is empty")
         val buildModel = Gson().fromJson(FileReader(configPath), JsonBuildModel::class.java)
-        removeTargetDir(buildModel, Path.of(configPath).parent)
+        removeTargetDir(buildModel, Path.of(configPath).parent.parent)
     }
 
     private fun removeTargetDir(buildModel: JsonBuildModel, rootPath: Path) {

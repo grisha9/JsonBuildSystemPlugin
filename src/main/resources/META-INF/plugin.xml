@@ -34,8 +34,10 @@
                              displayName="JsonBuildSystem"/>
         <toolWindow id="JsonBuildSystem" anchor="right" icon="AllIcons.FileTypes.Json"
                     factoryClass="ru.rzn.gmyasoedov.jsonbuildsystem.view.JsonBuildSystemToolWindowFactory"/>
-
+        <externalSystemViewContributor id="JsonBuildSystem" implementation="ru.rzn.gmyasoedov.jsonbuildsystem.view.JsonBuildSystemExternalViewContributor"/>
         <externalProjectDataService implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.service.CompilerArgDataService"/>
+        <runConfigurationProducer implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.execution.JsonBuildSystemRuntimeConfigurationProducer"/>
+        <configurationType implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.execution.JsonBuildSystemExternalTaskConfigurationType"/>
 
         <projectService serviceImplementation="ru.rzn.gmyasoedov.jsonbuildsystem.settings.SystemSettings"/>
         <projectService serviceImplementation="ru.rzn.gmyasoedov.jsonbuildsystem.settings.LocalSettings"/>
