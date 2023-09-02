@@ -31,7 +31,7 @@ class JsonBuildSystemManager : ExternalSystemConfigurableAware, ExternalSystemUi
     )
 
     override fun getConfigurable(project: Project) = JsonBuildSystemSettingsConfigurable(project)
-    /*------1----*/
+
 
     override fun getProjectRepresentationName(targetProjectPath: String, rootProjectPath: String?): String {
         return ExternalSystemApiUtil.getProjectRepresentationName(targetProjectPath, rootProjectPath)
@@ -45,7 +45,6 @@ class JsonBuildSystemManager : ExternalSystemConfigurableAware, ExternalSystemUi
 
     override fun getTaskIcon() = AllIcons.Nodes.ConfigFolder
 
-    /*------2----*/
 
     override fun enhanceRemoteProcessing(parameters: SimpleJavaParameters) =
         throw java.lang.UnsupportedOperationException()
@@ -81,7 +80,7 @@ class JsonBuildSystemManager : ExternalSystemConfigurableAware, ExternalSystemUi
 
     override fun getExternalProjectDescriptor() = BuildFileChooserDescriptor()
 
-    /*------3----*/
+
     override fun getAffectedExternalProjectPath(changedFileOrDirPath: String, project: Project): String? {
         return autoImportAwareDelegate.getAffectedExternalProjectPath(changedFileOrDirPath, project)
     }

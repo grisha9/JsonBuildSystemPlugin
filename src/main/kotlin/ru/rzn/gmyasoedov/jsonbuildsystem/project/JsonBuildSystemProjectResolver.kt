@@ -1,6 +1,5 @@
 package ru.rzn.gmyasoedov.jsonbuildsystem.project
 
-import com.google.gson.Gson
 import com.intellij.externalSystem.JavaModuleData
 import com.intellij.externalSystem.JavaProjectData
 import com.intellij.openapi.externalSystem.model.DataNode
@@ -14,14 +13,13 @@ import com.intellij.openapi.externalSystem.service.project.ExternalSystemProject
 import com.intellij.openapi.module.ModuleTypeManager
 import com.intellij.openapi.roots.DependencyScope
 import com.intellij.pom.java.LanguageLevel
-import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants.SYSTEM_ID
 import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonBuildModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonDependencyModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.project.model.BuildActionData
 import ru.rzn.gmyasoedov.jsonbuildsystem.project.model.CompilerArgData
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.ExecutionSettings
+import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants.SYSTEM_ID
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.JsonBuildSystemUtils
-import java.io.FileReader
 import java.nio.file.Path
 
 

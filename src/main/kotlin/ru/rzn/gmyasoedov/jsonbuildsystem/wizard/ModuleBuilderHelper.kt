@@ -1,14 +1,9 @@
 package ru.rzn.gmyasoedov.jsonbuildsystem.wizard
 
-import com.google.gson.Gson
-import com.intellij.openapi.vfs.LocalFileSystem
 import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonBuildModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.BuildModelWithPath
-import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants.DEFAULT_BUILD_FILE_NAME
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.JsonBuildSystemUtils
-import java.io.FileReader
-import java.io.FileWriter
 import java.nio.file.Path
 
 object ModuleBuilderHelper {
@@ -22,14 +17,6 @@ object ModuleBuilderHelper {
             "17", mutableListOf(), mutableListOf(), mutableListOf()
         )
         JsonBuildSystemUtils.toJson(moduleDir.resolve(DEFAULT_BUILD_FILE_NAME).toString(), jsonBuildModel)
-    }
-
-    private fun createDirectory(srcMainJavaPath: Path) {
-        try {
-            srcMainJavaPath.toFile().mkdirs()
-            LocalFileSystem.getInstance().refreshAndFindFileByPath(srcMainJavaPath.toString())
-        } catch (_: Exception) {
-        }
     }
 
     fun setupModule(
