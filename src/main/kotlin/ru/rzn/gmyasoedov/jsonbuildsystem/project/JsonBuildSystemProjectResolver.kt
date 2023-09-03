@@ -44,7 +44,7 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
         setupTasks(projectDataNode, mainModulePath)
         setupJdkNodes(settings, projectDataNode, mainModulePath, languageLevel)
         setupModulesData(buildModel, mainModulePath.parent, projectDataNode)
-
+        listener.onTaskOutput(id, "import finished", true)
         return projectDataNode
     }
 
