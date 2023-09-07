@@ -35,14 +35,15 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
         settings ?: throw ExternalSystemException("settings is empty")
         val configPath = settings.configPath ?: throw ExternalSystemException("config paths is empty")
         val buildModel = JsonBuildSystemUtils.fromJson(configPath)
-        val languageLevel = settings.jdkName?.let { LanguageLevel.parse(it) }
-            ?: throw ExternalSystemException("sdk not found")
+        val languageLevel = getLanguageLevel(buildModel)
         val mainModulePath = Path.of(configPath).parent
 
         val projectDataNode = createProjectNode(buildModel, mainModulePath)
+
+        projectDataNode.createChild(ProjectKeys.TASK, TaskData(SYSTEM_ID, "clean", mainModulePath.toString(), null))
         projectDataNode.createChild(BuildActionData.KEY, BuildActionData())
-        setupTasks(projectDataNode, mainModulePath)
-        setupJdkNodes(settings, projectDataNode, mainModulePath, languageLevel)
+
+        setupJdkData(settings, projectDataNode, mainModulePath, languageLevel)
         setupModulesData(buildModel, mainModulePath.parent, projectDataNode)
         listener.onTaskOutput(id, "import finished", true)
         return projectDataNode
@@ -63,7 +64,7 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
         return DataNode(ProjectKeys.PROJECT, projectData, null)
     }
 
-    private fun setupJdkNodes(
+    private fun setupJdkData(
         settings: ExecutionSettings,
         projectDataNode: DataNode<ProjectData>,
         mainModulePath: Path,
@@ -118,8 +119,7 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
         moduleDataNode.createChild(ModuleSdkData.KEY, ModuleSdkData(null))
         moduleDataNode.createChild(CompilerArgData.KEY, CompilerArgData(buildModule.compilerArgs))
 
-        val languageLevel = LanguageLevel.parse(buildModule.compilerJdkVersion)
-            ?: throw ExternalSystemException("compilerJdkVersion not found ${buildModule.compilerJdkVersion}")
+        val languageLevel = getLanguageLevel(buildModule)
         moduleDataNode.createChild(
             JavaModuleData.KEY,
             JavaModuleData(SYSTEM_ID, languageLevel, languageLevel.toJavaVersion().toFeatureString())
@@ -131,6 +131,10 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
             setupModulesData(childModule, modulePath, moduleDataNode)
         }
     }
+
+    private fun getLanguageLevel(buildModule: JsonBuildModel) =
+        (LanguageLevel.parse(buildModule.compilerJdkVersion)
+            ?: throw ExternalSystemException("compilerJdkVersion not found ${buildModule.compilerJdkVersion}"))
 
     private fun setupContentRoots(
         buildModule: JsonBuildModel, projectPath: Path, moduleDataNode: DataNode<ModuleData>
@@ -188,12 +192,5 @@ class JsonBuildSystemProjectResolver : ExternalSystemProjectResolver<ExecutionSe
         val libraryDependencyData = LibraryDependencyData(moduleNode.data, library, LibraryLevel.PROJECT)
         libraryDependencyData.scope = DependencyScope.COMPILE
         moduleNode.createChild(ProjectKeys.LIBRARY_DEPENDENCY, libraryDependencyData)
-    }
-
-    private fun setupTasks(projectDataNode: DataNode<ProjectData>, mainModulePath: Path) {
-        projectDataNode.createChild(
-            ProjectKeys.TASK,
-            TaskData(SYSTEM_ID, "clean", mainModulePath.toString(), null)
-        )
     }
 }

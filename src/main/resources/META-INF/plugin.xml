@@ -38,6 +38,7 @@
         <externalProjectDataService implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.service.CompilerArgDataService"/>
         <runConfigurationProducer implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.execution.JsonBuildSystemRuntimeConfigurationProducer"/>
         <configurationType implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.execution.JsonBuildSystemExternalTaskConfigurationType"/>
+        <externalSystem.runConfigurationEx implementation="ru.rzn.gmyasoedov.jsonbuildsystem.project.execution.JsonBuildSystemRunConfigurationExtension"/>
 
         <projectService serviceImplementation="ru.rzn.gmyasoedov.jsonbuildsystem.settings.SystemSettings"/>
         <projectService serviceImplementation="ru.rzn.gmyasoedov.jsonbuildsystem.settings.LocalSettings"/>

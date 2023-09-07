@@ -2,12 +2,9 @@ package ru.rzn.gmyasoedov.jsonbuildsystem.view
 
 import com.intellij.openapi.externalSystem.model.DataNode
 import com.intellij.openapi.externalSystem.model.Key
-import com.intellij.openapi.externalSystem.model.ProjectKeys
-import com.intellij.openapi.externalSystem.model.task.TaskData
 import com.intellij.openapi.externalSystem.view.ExternalProjectsView
 import com.intellij.openapi.externalSystem.view.ExternalSystemNode
 import com.intellij.openapi.externalSystem.view.ExternalSystemViewContributor
-import com.intellij.util.SmartList
 import com.intellij.util.containers.MultiMap
 import ru.rzn.gmyasoedov.jsonbuildsystem.project.model.BuildActionData
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants.SYSTEM_ID
@@ -22,6 +19,6 @@ class JsonBuildSystemExternalViewContributor : ExternalSystemViewContributor() {
         dataNodes: MultiMap<Key<*>?, DataNode<*>?>
     ): List<ExternalSystemNode<*>> {
         val buildActionNodes = dataNodes[BuildActionData.KEY]
-        return buildActionNodes.map { BuildActionViewNode(externalProjectsView) }
+        return buildActionNodes.map { BuildActionViewNode(externalProjectsView, it as DataNode<BuildActionData>) }
     }
 }

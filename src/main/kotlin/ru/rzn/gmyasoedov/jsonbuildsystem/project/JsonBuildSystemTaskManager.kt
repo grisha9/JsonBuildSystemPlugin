@@ -5,10 +5,8 @@ import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskId
 import com.intellij.openapi.externalSystem.model.task.ExternalSystemTaskNotificationListener
 import com.intellij.openapi.externalSystem.task.ExternalSystemTaskManager
 import com.intellij.openapi.util.io.FileUtil
-import ru.rzn.gmyasoedov.jsonbuildsystem.buildmodel.JsonBuildModel
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.ExecutionSettings
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.JsonBuildSystemUtils
-import java.nio.file.Path
 
 class JsonBuildSystemTaskManager : ExternalSystemTaskManager<ExecutionSettings> {
 
@@ -22,19 +20,13 @@ class JsonBuildSystemTaskManager : ExternalSystemTaskManager<ExecutionSettings> 
     ) {
         settings ?: throw ExternalSystemException("settings is empty")
         if (taskNames != listOf("clean")) {
-            // sorry only clean work
+            // only clean implemented
             return
         }
         val configPath = settings.configPath ?: throw ExternalSystemException("config paths is empty")
-        val buildModel = JsonBuildSystemUtils.fromJson(configPath)
-        removeTargetDir(buildModel, Path.of(configPath).parent.parent)
-    }
-
-    private fun removeTargetDir(buildModel: JsonBuildModel, rootPath: Path) {
-        val modulePath = rootPath.resolve(buildModel.artifactId)
-        val targetPath = modulePath.resolve("target")
-        FileUtil.deleteRecursively(targetPath)
-        buildModel.modules.forEach { removeTargetDir(it, modulePath) }
+        JsonBuildSystemUtils.getAllModulesWithPath(configPath)
+            .map { it.modelPath.resolve("target") }
+            .forEach { FileUtil.deleteRecursively(it) }
     }
 
     override fun cancelTask(id: ExternalSystemTaskId, listener: ExternalSystemTaskNotificationListener) = false

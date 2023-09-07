@@ -6,7 +6,7 @@ import com.intellij.openapi.project.Project
 import ru.rzn.gmyasoedov.jsonbuildsystem.settings.SystemSettings
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants.SYSTEM_ID
 
-internal class JsonBuildSystemToolWindowFactory : AbstractExternalSystemToolWindowFactory(SYSTEM_ID) {
+class JsonBuildSystemToolWindowFactory : AbstractExternalSystemToolWindowFactory(SYSTEM_ID) {
 
     override fun getSettings(project: Project): AbstractExternalSystemSettings<*, *, *> =
         project.getService(SystemSettings::class.java)

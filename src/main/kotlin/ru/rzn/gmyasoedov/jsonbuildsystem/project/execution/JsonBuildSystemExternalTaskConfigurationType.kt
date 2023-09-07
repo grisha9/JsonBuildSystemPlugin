@@ -5,10 +5,6 @@ import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants.SYSTEM_ID
 
 class JsonBuildSystemExternalTaskConfigurationType : AbstractExternalSystemTaskConfigurationType(SYSTEM_ID) {
 
-    override fun getHelpTopic(): String {
-        return "reference.dialogs.rundebug.JsonBuildSystemRunConfiguration"
-    }
-
     override fun getConfigurationFactoryId() = SYSTEM_ID.readableName
 
     override fun isDumbAware() = true

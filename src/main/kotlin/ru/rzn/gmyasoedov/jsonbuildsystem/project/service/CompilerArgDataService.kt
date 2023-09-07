@@ -14,7 +14,7 @@ class CompilerArgDataService : AbstractProjectDataService<CompilerArgData, Void>
 
     override fun getTargetDataKey() = CompilerArgData.KEY
 
-    override fun postProcess(
+    override fun importData(
         toImport: Collection<DataNode<CompilerArgData>>,
         projectData: ProjectData?,
         project: Project,
