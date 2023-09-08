@@ -51,13 +51,9 @@ class SystemSettings(project: Project) :
         return projectSettings
     }
 
-    override fun subscribe(
-        listener: ExternalSystemSettingsListener<ProjectSettings?>,
-        parentDisposable: Disposable
-    ) {
+    override fun subscribe(listener: ExternalSystemSettingsListener<ProjectSettings?>, parentDisposable: Disposable) {
     }
 }
-
 
 class SystemSettingsState : AbstractExternalSystemSettings.State<ProjectSettings> {
     private val projectSettings: MutableSet<ProjectSettings> = TreeSet<ProjectSettings>()

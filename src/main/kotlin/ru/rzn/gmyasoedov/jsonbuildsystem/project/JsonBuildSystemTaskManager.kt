@@ -20,8 +20,7 @@ class JsonBuildSystemTaskManager : ExternalSystemTaskManager<ExecutionSettings> 
     ) {
         settings ?: throw ExternalSystemException("settings is empty")
         if (taskNames != listOf("clean")) {
-            // only clean implemented
-            return
+            throw ExternalSystemException("only clean implemented")
         }
         val configPath = settings.configPath ?: throw ExternalSystemException("config paths is empty")
         JsonBuildSystemUtils.getAllModulesWithPath(configPath)
