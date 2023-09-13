@@ -7,7 +7,7 @@ import com.intellij.openapi.externalSystem.settings.AbstractExternalSystemLocalS
 import com.intellij.openapi.project.Project
 import ru.rzn.gmyasoedov.jsonbuildsystem.utils.Constants
 
-@State(name = "MavenLocalSettings", storages = [Storage(StoragePathMacros.CACHE_FILE)])
+@State(name = "JsonBuildSystemLocalSettings", storages = [Storage(StoragePathMacros.CACHE_FILE)])
 class LocalSettings(project: Project) : AbstractExternalSystemLocalSettings<LocalSettings.JsonLocalState>(
     Constants.SYSTEM_ID,
     project,
