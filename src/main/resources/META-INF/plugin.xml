@@ -22,6 +22,7 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.properties</depends>
+    <depends>org.jetbrains.kotlin</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
@@ -45,6 +46,9 @@
 
         <registryKey key="JSONBUILDSYSTEM.system.in.process" defaultValue="true"
                      description="Whether IDEA should use 'in-process' mode for interaction with plugin api"/>
+
+        <codeInsight.lineMarkerProvider language="UAST"
+                                        implementationClass="ru.rzn.gmyasoedov.jsonbuildsystem.TestLineMarkerProvider"/>
     </extensions>
 
     <actions>

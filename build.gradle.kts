@@ -17,7 +17,7 @@ intellij {
     version.set("2023.2")
     type.set("IC") // Target IDE Platform
 
-    plugins.set(listOf("java", "properties"))
+    plugins.set(listOf("java", "properties", "org.jetbrains.kotlin"))
 }
 
 tasks {
