@@ -4,6 +4,12 @@ import com.intellij.testFramework.fixtures.LightJavaCodeInsightFixtureTestCase
 
 
 class TestLineMarkerProviderTest : LightJavaCodeInsightFixtureTestCase() {
+
+    override fun setUp() {
+        super.setUp()
+        myFixture.enableInspections(TestInspection::class.java)
+    }
+
     fun testJavaLineProvider() {
         myFixture.configureByText(
             "MyAutoConfig.java",
@@ -13,6 +19,7 @@ class TestLineMarkerProviderTest : LightJavaCodeInsightFixtureTestCase() {
                 }
             """.trimIndent()
         )
+
         val gutterMarks = myFixture.findGuttersAtCaret()
         println(gutterMarks)
     }

@@ -49,6 +49,11 @@
 
         <codeInsight.lineMarkerProvider language="UAST"
                                         implementationClass="ru.rzn.gmyasoedov.jsonbuildsystem.TestLineMarkerProvider"/>
+        <localInspection language="UAST"
+                         displayName="@Test"
+                         groupName="Test"
+                         enabledByDefault="true"
+                         implementationClass="ru.rzn.gmyasoedov.jsonbuildsystem.TestInspection"/>
     </extensions>
 
     <actions>
